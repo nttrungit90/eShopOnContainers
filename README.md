@@ -1,2 +1,1 @@
-# eShopOnContainers
-eShopOnContainers
+# eshop
