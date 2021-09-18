@@ -1,4 +1,4 @@
-package com.eshop.ordering;
+package com.eshop.catalog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author trung.nguyenthanh
  */
 @SpringBootApplication
-public class EshopOrderingApplication {
+public class EshopCatalogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EshopOrderingApplication.class, args);
+		SpringApplication.run(EshopCatalogApplication.class, args);
 	}
 
 }

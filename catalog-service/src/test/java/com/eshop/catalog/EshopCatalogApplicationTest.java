@@ -1,4 +1,4 @@
-package com.eshop.ordering;
+package com.eshop.catalog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -6,7 +6,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
 @Sql({"/data.sql"})
-class EshopOrderingApplicationTest {
+class EshopCatalogApplicationTest {
 
 
 	@Test
