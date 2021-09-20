@@ -12,12 +12,31 @@ import org.springframework.data.domain.Pageable;
 public interface CatalogItemService {
 
     /**
-     * loadCatalogItemPage
-     * If ids is not empty, query with ids and paging
-     * If ids is empty, query with paging
-     * @param ids
+     * findCatalogItemPageable
      * @param pageable
      * @return
      */
-    PaginatedItemsModel<CatalogItemDto> loadCatalogItemPage(List<Long> ids, Pageable pageable);
+    PaginatedItemsModel<CatalogItemDto> findCatalogItemPageable(Pageable pageable);
+
+    /**
+     * findCatalogItemByName
+     * @param name
+     * @param pageable
+     * @return
+     */
+    PaginatedItemsModel<CatalogItemDto> findCatalogItemByNameStartingWith(String name, Pageable pageable);
+
+    /**
+     * Find by ids in
+     * @param ids
+     * @return
+     */
+    List<CatalogItemDto> findCatalogItemByIdIn(List<Long> ids);
+
+    /**
+     * Get by id
+     * @param id
+     * @return
+     */
+    CatalogItemDto findCatalogItemById(Long id);
 }

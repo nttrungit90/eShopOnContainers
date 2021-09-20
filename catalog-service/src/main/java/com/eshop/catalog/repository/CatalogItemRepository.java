@@ -15,9 +15,15 @@ public interface CatalogItemRepository extends JpaRepository<CatalogItem,Long> {
     /**
      * Find by id in ids
      * @param ids
-     * @param pageable
      * @return
      */
-    Page<CatalogItem> findByIdIn(List<Long> ids, Pageable pageable);
+    List<CatalogItem> findByIdIn(List<Long> ids);
+
+    /**
+     * Find by name start with
+     * @param name
+     * @return
+     */
+    Page<CatalogItem> findByNameStartingWith(String name, Pageable pageable);
 
 }
