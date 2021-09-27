@@ -4,10 +4,15 @@ import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.eshop.catalog.infra.configurationproperties.CatalogSettings;
+import com.eshop.catalog.service.CatalogBrandService;
 import com.eshop.catalog.service.CatalogItemService;
+import com.eshop.catalog.service.CatalogTypeService;
+import com.eshop.catalog.service.dto.CatalogBrandDto;
 import com.eshop.catalog.service.dto.CatalogItemDto;
+import com.eshop.catalog.service.dto.CatalogTypeDto;
 import com.eshop.catalog.service.dto.PaginatedItemsModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +38,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CatalogItemRestController {
 
     private final CatalogItemService catalogItemService;
+
+    private final CatalogTypeService catalogTypeService;
+
+    private final CatalogBrandService catalogBrandService;
 
     private final CatalogSettings catalogSettings;
 
@@ -90,6 +99,79 @@ public class CatalogItemRestController {
 
         return paginatedItemsModel;
 
+    }
+
+    // localhost:6101/api/v1/catalog/items/type/1/brand/1[?pageSize=3&pageIndex=10]
+    @GetMapping(path = "/items/type/{typeId}/brand/{brandId}")
+    PaginatedItemsModel<CatalogItemDto> getItemsByTypeIdAndBrandId(
+        @PathVariable(name = "typeId") @Valid @NotNull(message = "type id should not be null") Long typeId,
+        @PathVariable(name = "brandId") @NotNull(message = "brand id should not be null") Long brandId,
+
+        @PageableDefault(page = 0, size = 10)
+        @SortDefault.SortDefaults({
+            @SortDefault(sort = "name", direction = Direction.ASC),
+            @SortDefault(sort = "id", direction = Direction.DESC)
+        }) Pageable pageable) {
+
+        PaginatedItemsModel<CatalogItemDto>  paginatedItemsModel = catalogItemService.findCatalogItemByTypeIdAndBrandId(
+            typeId, brandId, pageable);
+
+        changeUriPlaceholder(paginatedItemsModel.getData());
+
+        return paginatedItemsModel;
+
+    }
+
+    // localhost:6101/api/v1/catalog/items/type/1/brand[?pageSize=3&pageIndex=10]
+    @GetMapping(path = "/items/type/{typeId}/brand")
+    PaginatedItemsModel<CatalogItemDto> getItemsByTypeId(
+        @PathVariable(name = "typeId") @Valid @NotNull(message = "type id should not be null") Long typeId,
+
+        @PageableDefault(page = 0, size = 10)
+        @SortDefault.SortDefaults({
+            @SortDefault(sort = "name", direction = Direction.ASC),
+            @SortDefault(sort = "id", direction = Direction.DESC)
+        }) Pageable pageable) {
+
+        PaginatedItemsModel<CatalogItemDto>  paginatedItemsModel = catalogItemService.findCatalogItemByTypeId(typeId, pageable);
+
+        changeUriPlaceholder(paginatedItemsModel.getData());
+
+        return paginatedItemsModel;
+
+    }
+
+    // localhost:6101/api/v1/catalog/items/type/all/brand/1[?pageSize=3&pageIndex=10]
+    @GetMapping(path = "/items/type/all/brand/{brandId}")
+    PaginatedItemsModel<CatalogItemDto> getItemsByBrandId(
+        @PathVariable(name = "brandId") @Valid @NotNull(message = "brand id should not be null") Long brandId,
+
+        @PageableDefault(page = 0, size = 10)
+        @SortDefault.SortDefaults({
+            @SortDefault(sort = "name", direction = Direction.ASC),
+            @SortDefault(sort = "id", direction = Direction.DESC)
+        }) Pageable pageable) {
+
+        PaginatedItemsModel<CatalogItemDto>  paginatedItemsModel = catalogItemService.findCatalogItemByBrandId(brandId, pageable);
+
+        changeUriPlaceholder(paginatedItemsModel.getData());
+
+        return paginatedItemsModel;
+
+    }
+
+    // localhost:6101/api/v1/catalog/catalogtypes
+    @GetMapping(path = "/catalogtypes")
+    List<CatalogTypeDto> getAllCatalogType() {
+
+        return catalogTypeService.findAllCatalogType();
+    }
+
+    // localhost:6101/api/v1/catalog/catalogbrands
+    @GetMapping(path = "/catalogbrands")
+    List<CatalogBrandDto> getAllCatalogBrand() {
+
+        return catalogBrandService.findAllCatalogBrand();
     }
 
 

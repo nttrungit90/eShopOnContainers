@@ -26,4 +26,29 @@ public interface CatalogItemRepository extends JpaRepository<CatalogItem,Long> {
      */
     Page<CatalogItem> findByNameStartingWith(String name, Pageable pageable);
 
+    /**
+     *
+     * @param typeId
+     * @param brandId
+     * @param pageable
+     * @return
+     */
+    Page<CatalogItem> findByCatalogTypeIdAndCatalogBrandId(Long typeId, Long brandId, Pageable pageable);
+
+    /**
+     *
+     * @param typeId
+     * @param pageable
+     * @return
+     */
+    Page<CatalogItem> findByCatalogTypeId(Long typeId, Pageable pageable);
+
+    /**
+     *
+     * @param brandId
+     * @param pageable
+     * @return
+     */
+    Page<CatalogItem> findByCatalogBrandId(Long brandId, Pageable pageable);
+
 }

@@ -81,4 +81,55 @@ public class CatalogItemServiceImpl implements CatalogItemService {
 
     }
 
+    @Override
+    public  PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeIdAndBrandId(Long typeId, Long brandId, Pageable pageable) {
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandId(typeId, brandId, pageable);
+
+        List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
+            .map(catalogItemMapper::catalogItemToCatalogItemDto)
+            .collect(Collectors.toList());
+
+        return PaginatedItemsModel.<CatalogItemDto>builder()
+            .totalElements(catalogItemPage.getTotalElements())
+            .totalPages(catalogItemPage.getTotalPages())
+            .pageIndex(pageable.getPageNumber())
+            .pageSize(pageable.getPageSize())
+            .data(catalogItemDtos)
+            .build();
+    }
+
+    @Override
+    public PaginatedItemsModel<CatalogItemDto> findCatalogItemByBrandId(Long brandId, Pageable pageable) {
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogBrandId(brandId, pageable);
+
+        List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
+            .map(catalogItemMapper::catalogItemToCatalogItemDto)
+            .collect(Collectors.toList());
+
+        return PaginatedItemsModel.<CatalogItemDto>builder()
+            .totalElements(catalogItemPage.getTotalElements())
+            .totalPages(catalogItemPage.getTotalPages())
+            .pageIndex(pageable.getPageNumber())
+            .pageSize(pageable.getPageSize())
+            .data(catalogItemDtos)
+            .build();
+    }
+
+    @Override
+    public PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeId(Long typeId, Pageable pageable) {
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeId(typeId, pageable);
+
+        List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
+            .map(catalogItemMapper::catalogItemToCatalogItemDto)
+            .collect(Collectors.toList());
+
+        return PaginatedItemsModel.<CatalogItemDto>builder()
+            .totalElements(catalogItemPage.getTotalElements())
+            .totalPages(catalogItemPage.getTotalPages())
+            .pageIndex(pageable.getPageNumber())
+            .pageSize(pageable.getPageSize())
+            .data(catalogItemDtos)
+            .build();
+    }
+
 }

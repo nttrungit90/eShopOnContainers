@@ -39,4 +39,11 @@ public interface CatalogItemService {
      * @return
      */
     CatalogItemDto findCatalogItemById(Long id);
+
+
+    PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeIdAndBrandId(Long typeId, Long brandId, Pageable pageable);
+
+    PaginatedItemsModel<CatalogItemDto> findCatalogItemByBrandId(Long brandId, Pageable pageable);
+
+    PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeId(Long typeId, Pageable pageable);
 }
