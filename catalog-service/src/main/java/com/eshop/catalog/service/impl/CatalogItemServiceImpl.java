@@ -83,8 +83,9 @@ public class CatalogItemServiceImpl implements CatalogItemService {
 
     @Override
     public  PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeIdAndBrandId(Long typeId, Long brandId, Pageable pageable) {
-        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandId(typeId, brandId, pageable);
+        //Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandId(typeId, brandId, pageable);
 
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandIdV2(typeId, brandId, pageable);
         List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
             .map(catalogItemMapper::catalogItemToCatalogItemDto)
             .collect(Collectors.toList());
@@ -100,7 +101,8 @@ public class CatalogItemServiceImpl implements CatalogItemService {
 
     @Override
     public PaginatedItemsModel<CatalogItemDto> findCatalogItemByBrandId(Long brandId, Pageable pageable) {
-        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogBrandId(brandId, pageable);
+        //Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogBrandId(brandId, pageable);
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandIdV2(null, brandId, pageable);
 
         List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
             .map(catalogItemMapper::catalogItemToCatalogItemDto)
@@ -117,7 +119,8 @@ public class CatalogItemServiceImpl implements CatalogItemService {
 
     @Override
     public PaginatedItemsModel<CatalogItemDto> findCatalogItemByTypeId(Long typeId, Pageable pageable) {
-        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeId(typeId, pageable);
+        //Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeId(typeId, pageable);
+        Page<CatalogItem> catalogItemPage = catalogItemRepository.findByCatalogTypeIdAndCatalogBrandIdV2(typeId, null, pageable);
 
         List<CatalogItemDto> catalogItemDtos = catalogItemPage.get()
             .map(catalogItemMapper::catalogItemToCatalogItemDto)
